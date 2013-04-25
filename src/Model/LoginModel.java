@@ -69,6 +69,7 @@ public class LoginModel {
       return ret;
  else 
      return "0";
+ // returns the latest session id of the logged in person 
     }
 
     
