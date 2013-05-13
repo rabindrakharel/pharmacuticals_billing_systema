@@ -32,6 +32,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.OrientationRequested;
 
 /**
  *
@@ -1218,17 +1221,36 @@ else {
                       billNo.setText(tranx_id);
                       billNo.setVisible(false);
                       billNo.setVisible(true);
-                  PrinterJob printJob = PrinterJob.getPrinterJob();
-                 printJob.setPrintable(this);
+  PageFormat format = new PageFormat();
+   Paper paper = new Paper();
+   double paperWidth = 3.2;
+   double paperHeight = 11.69;
+   double leftMargin = 0.2;
+   double rightMargin = 0.2;
+   double topMargin = 0.05;
+   double bottomMargin = 0.01;
+   paper.setSize(paperWidth * 72.0, paperHeight * 72.0);
+   paper.setImageableArea(leftMargin * 72.0, topMargin * 72.0,
+        (paperWidth - leftMargin - rightMargin) * 72.0,
+        (paperHeight - topMargin - bottomMargin) * 72.0);
+   format.setPaper(paper);
+   PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+   aset.add(OrientationRequested.PORTRAIT);
+   PrinterJob printerJob = PrinterJob.getPrinterJob();
+   Printable printable = new ReceiptPrintTest();
+   format = printerJob.validatePage(format);
+   printerJob.setPrintable(printable, format);
+                 printerJob.setPrintable(this);
           
                       try  
                       {  
-                          printJob.print();  
+                          printerJob.print(aset);
                       } // end try  
                       catch (Exception ex)  
                       {  
                           ex.printStackTrace();  
                       } // end Exception catch  
+                      //   Be sure all happening in your life is my plan for you .  
                   try {
                      
                       for(ArrayList<String> list: billData) {    
@@ -1864,14 +1886,12 @@ float discAmt=0;
         }  
         int dx=100;
         int dy=75;
-        double width = 944;  
-        double height = 1000;  
-        Paper custom = new Paper();  
-        custom.setSize(width,height);  
-        custom.setImageableArea(0,0,width,height);  
-        pf.setPaper(custom);  
-        Graphics2D g2d = (Graphics2D)g;  
-         
+          if (page < 0 || page >= 1) {
+            return Printable.NO_SUCH_PAGE;
+        }
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.translate(pf.getImageableX(), pf.getImageableY());       
           
         //The following returns the correct dimensions (612 width, 504 height).  
         System.out.println("Width: "+pf.getImageableWidth()+" Height: "+pf.getImageableHeight());  
@@ -1891,7 +1911,6 @@ float discAmt=0;
        g.drawString("Qty",dx+122,dy+43);
        g.drawString("Rate",dx+145,dy+43);
        g.drawString("AMT(NRS)",dx+170,dy+43);
-       g2d.translate(pf.getImageableX(), pf.getImageableY());
        
        NumberFormat formatter = NumberFormat.getInstance(new Locale("en_US"));
        BigDecimal bd = new BigDecimal(Math.round(totalAmount*100.0)/100.0);     
