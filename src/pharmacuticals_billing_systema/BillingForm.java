@@ -1904,9 +1904,9 @@ float discAmt=0;
        g.drawString(dateLabel.getText(),dx+25,dy+35);
       g.setFont(new Font("TimesRoman",Font.BOLD,8));
        g.drawString("Item",dx+14,dy+45);
-       g.drawString("Qty",dx+122,dy+45);
-       g.drawString("Rate",dx+145,dy+45);
-       g.drawString("AMT(NRS)",dx+170,dy+45);
+       g.drawString("Qty",dx+120,dy+45);
+       g.drawString("Rate",dx+143,dy+45);
+       g.drawString("AMT(NRS)",dx+168,dy+45);
        
        NumberFormat formatter = NumberFormat.getInstance(new Locale("en_US"));
        BigDecimal bd = new BigDecimal(Math.round(totalAmount*100.0)/100.0);     
@@ -1940,7 +1940,7 @@ float discAmt=0;
             illusion2.add(" ");
             illusion4.add(" ");
             illusion3.add(" ");
-            illusion1.add("     NET TOTAL"); 
+            illusion1.add("   NET TOTAL"); 
             illusion2.add(" ");
             illusion4.add(" ");
             illusion3.add(totalAmountLabel.getText());
@@ -1956,21 +1956,21 @@ float discAmt=0;
         incr=dy+55;
         for (String str:illusion2) // quantity ko lagi
         {
-        g.drawString(str,dx+122,incr);
+        g.drawString(str,dx+120,incr);
         incr+=8;
         }
         
         incr=dy+55;
         for (String str:illusion4)  
         {
-        g.drawString(str,dx+145,incr);
+        g.drawString(str,dx+143,incr);
         incr+=8;
         }
         
         incr=dy+55;
         for (String str:illusion3)
         {
-        g.drawString(str,dx+170,incr);
+        g.drawString(str,dx+168,incr);
         incr+=8;
         }
        
