@@ -33,7 +33,7 @@ public class ReceiptPrintTest implements Printable {
         g2d.setFont(font);
         g2d.drawString("1234567890abcdefgeeeeeeeeeeeeeeeeeeeeee", 5, 70);
 
-        g2d.drawRect(5, 0, 100, 50);
+        g2d.drawRect(0, 0, 100, 50);
 
         return Printable.PAGE_EXISTS;
     }

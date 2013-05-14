@@ -1225,8 +1225,8 @@ else {
    Paper paper = new Paper();
    double paperWidth = 3.2;
    double paperHeight = 11.69;
-   double leftMargin = 0.2;
-   double rightMargin = 0.2;
+   double leftMargin = 0.1;
+   double rightMargin = 0.1;
    double topMargin = 0.05;
    double bottomMargin = 0.01;
    paper.setSize(paperWidth * 72.0, paperHeight * 72.0);
@@ -1237,10 +1237,8 @@ else {
    PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
    aset.add(OrientationRequested.PORTRAIT);
    PrinterJob printerJob = PrinterJob.getPrinterJob();
-   Printable printable = new ReceiptPrintTest();
    format = printerJob.validatePage(format);
-   printerJob.setPrintable(printable, format);
-                 printerJob.setPrintable(this);
+   printerJob.setPrintable(this, format);
           
                       try  
                       {  
@@ -1879,38 +1877,36 @@ float discAmt=0;
 
     
     @Override
-     public int print(Graphics g, PageFormat pf, int page) throws PrinterException   
+     public int print(Graphics g2d, PageFormat pf, int page) throws PrinterException   
         {   
-                    if (page > 0) {   
-            return NO_SUCH_PAGE;  
-        }  
-        int dx=100;
-        int dy=75;
+            
+        int dx=1;
+        int dy=1;
           if (page < 0 || page >= 1) {
             return Printable.NO_SUCH_PAGE;
         }
 
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.translate(pf.getImageableX(), pf.getImageableY());       
+        Graphics2D g = (Graphics2D) g2d;
+        g.translate(pf.getImageableX(), pf.getImageableY());       
           
         //The following returns the correct dimensions (612 width, 504 height).  
         System.out.println("Width: "+pf.getImageableWidth()+" Height: "+pf.getImageableHeight());  
         //g.setFont(new Font("calibri",Font.BOLD,8));
        g.setFont(new Font("TimesRoman",Font.BOLD,8));
-       g.drawString(" Uma Ayurveda / Lokman Pharma ",dx+30,dy+3); 
+       g.drawString(" Uma Ayurveda / Lokman Pharma ",dx+30,dy+6); 
         g.setFont(new Font("TimesRoman",Font.PLAIN,8));
-       g.drawString("Maharajgunj-KTM",dx+50,dy+12);
-       g.drawString("Pan No 303420543",dx+160,dy+12);
-       g.drawString("Bill No. "+billNo.getText(),dx+160,dy+25);
+       g.drawString("Maharajgunj-KTM",dx+50,dy+15);
+       g.drawString("Pan No 303420543",dx+135,dy+17);
+       g.drawString("Bill No. "+billNo.getText(),dx+135,dy+29);
        g.drawString("Name:",dx+1,dy+25);
        g.drawString(customerName,dx+25,dy+25); 
-       g.drawString("Date:",dx+1,dy+33);
-       g.drawString(dateLabel.getText(),dx+25,dy+33);
+       g.drawString("Date:",dx+1,dy+35);
+       g.drawString(dateLabel.getText(),dx+25,dy+35);
       g.setFont(new Font("TimesRoman",Font.BOLD,8));
-       g.drawString("Item",dx+14,dy+43);
-       g.drawString("Qty",dx+122,dy+43);
-       g.drawString("Rate",dx+145,dy+43);
-       g.drawString("AMT(NRS)",dx+170,dy+43);
+       g.drawString("Item",dx+14,dy+45);
+       g.drawString("Qty",dx+122,dy+45);
+       g.drawString("Rate",dx+145,dy+45);
+       g.drawString("AMT(NRS)",dx+170,dy+45);
        
        NumberFormat formatter = NumberFormat.getInstance(new Locale("en_US"));
        BigDecimal bd = new BigDecimal(Math.round(totalAmount*100.0)/100.0);     
@@ -1935,20 +1931,20 @@ float discAmt=0;
             illusion2.add(" ");
             illusion4.add(" ");
             illusion3.add(" ");
-         illusion1.add("Discount "); 
+         illusion1.add("     Discount "); 
             illusion2.add(" ");
             illusion4.add(" ");
-            illusion3.add("-"+discAmt);
+            illusion3.add("-"+formatter.format(new BigDecimal(Math.round(discAmt*100.0)/100.0).floatValue()));
         }
             illusion1.add(" "); 
             illusion2.add(" ");
             illusion4.add(" ");
             illusion3.add(" ");
-            illusion1.add("         NET TOTAL"); 
+            illusion1.add("     NET TOTAL"); 
             illusion2.add(" ");
             illusion4.add(" ");
             illusion3.add(totalAmountLabel.getText());
-            int incr=dy+51;
+            int incr=dy+55;
              g.setFont(new Font("TimesRoman",Font.PLAIN,8));
              
         for (String str:illusion1)  //particular ko lagi
@@ -1957,21 +1953,21 @@ float discAmt=0;
         incr+=8;
         }
         
-        incr=dy+51;
+        incr=dy+55;
         for (String str:illusion2) // quantity ko lagi
         {
         g.drawString(str,dx+122,incr);
         incr+=8;
         }
         
-        incr=dy+51;
+        incr=dy+55;
         for (String str:illusion4)  
         {
         g.drawString(str,dx+145,incr);
         incr+=8;
         }
         
-        incr=dy+51;
+        incr=dy+55;
         for (String str:illusion3)
         {
         g.drawString(str,dx+170,incr);

@@ -162,8 +162,8 @@ public class BaseContainer extends javax.swing.JFrame {
     private void NewTransactionMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewTransactionMenuActionPerformed
         // TODO add your handling code here:
        // billingForm.setVisible(true);  
-//    if(isuser)
-//    {
+    if(isuser)
+    {
         if(purchaseCount!=0)
         {  purchaseCount=0;
             getContentPane().remove(purchaseForm);   
@@ -197,10 +197,10 @@ public class BaseContainer extends javax.swing.JFrame {
      getContentPane().validate();
      setVisible(true);  
      getContentPane().repaint();
-//    }
-//    else 
-//         new javax.swing.JOptionPane().showMessageDialog(this,"You are not logged in !! "); 
-//       
+    }
+    else 
+         new javax.swing.JOptionPane().showMessageDialog(this,"You are not logged in !! "); 
+       
     }//GEN-LAST:event_NewTransactionMenuActionPerformed
 
     private void NewPurchaseMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewPurchaseMenuActionPerformed
